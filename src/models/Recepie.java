@@ -7,6 +7,7 @@ public class Recepie {
     String date;
     ArrayList<Ingredient> ingredients;
     ArrayList<String> preparation;
-
+    String comment;
+    Nutrition nutrition;
 
 }

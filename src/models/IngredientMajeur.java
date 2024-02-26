@@ -4,17 +4,11 @@ import java.util.ArrayList;
 
 public class IngredientMajeur extends Ingredient{
     ArrayList<IngredientMineur> ingredients;
-    String preparation;
+    ArrayList<String> preparation;
 
     public IngredientMajeur(String name) {
         super(name);
-        this.preparation = "";
-        this.ingredients = new ArrayList<IngredientMineur>();
-    }
-
-    public IngredientMajeur(String name, String preparation) {
-        super(name);
-        this.preparation = preparation;
+        this.preparation = new ArrayList<String>();
         this.ingredients = new ArrayList<IngredientMineur>();
     }
 
@@ -23,24 +17,28 @@ public class IngredientMajeur extends Ingredient{
         this.ingredients.add(ingredient);
     }
 
+    public void addPreparation(String preparation){
+        this.preparation.add(preparation);
+    }
+
     public void removeIngredient(IngredientMineur ingredient){
         this.ingredients.remove(ingredient);
+    }
+
+    public void removePreparation(String preparation){
+        this.preparation.remove(preparation);
     }
 
     public ArrayList<IngredientMineur> getIngredients() {
         return ingredients;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPreparation() {
+    public ArrayList<String> getPreparation() {
         return preparation;
     }
 
-    public void setPreparation(String preparation) {
-        this.preparation = preparation;
+    public String getName() {
+        return name;
     }
 
 
