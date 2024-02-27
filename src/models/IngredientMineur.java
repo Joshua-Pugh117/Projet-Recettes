@@ -1,18 +1,23 @@
 package models;
 
 public class IngredientMineur extends Ingredient{
-    float amount;
+    String amount;
     String unit;
 
-    public IngredientMineur(String name, float amount) {
+    public IngredientMineur(String name, String amount) {
         super(name);
         this.amount = amount;
         this.unit = "";
     }
 
-    public IngredientMineur(String name, float amount, String unit) {
+    public IngredientMineur(String name, String amount, String unit) {
         super(name);
         this.amount = amount;
         this.unit = unit;
+    }
+
+    // toString
+    public String toString() {
+        return this.name + " " + this.amount + " " + this.unit;
     }
 }

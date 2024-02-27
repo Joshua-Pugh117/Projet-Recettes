@@ -1,27 +1,27 @@
 package models;
 
 public class Nutrition {
-    int calories;
-    int fat;
-    int carbohydrates;
-    int protein;
-    int alchohol;
+    String calories;
+    String fat;
+    String carbohydrates;
+    String protein;
+    String alchohol;
 
-
-    public Nutrition(int calories, int fat, int carbohydrates, int protein) {
+    public Nutrition(String calories, String fat, String carbohydrates, String protein, String alchohol) {
         this.calories = calories;
         this.fat = fat;
         this.carbohydrates = carbohydrates;
         this.protein = protein;
-        this.alchohol = 0;
-    }
-
-    public Nutrition(int calories, int fat, int carbohydrates, int protein, int alchohol) {
-        this.calories = calories;
-        this.fat = fat;
-        this.carbohydrates = carbohydrates;
-        this.protein = protein;
-        this.alchohol = alchohol;
+        if (alchohol == "") {
+            this.alchohol = "0%";
+        }
+        else {
+            this.alchohol = alchohol;
+        }
     }
     
+    // toString
+    public String toString() {
+        return "Calories: " + this.calories + "\n" + "Fat: " + this.fat + "\n" + "Carbohydrates: " + this.carbohydrates + "\n" + "Protein: " + this.protein + "\n" + "Alchohol: " + this.alchohol;
+    }
 }
