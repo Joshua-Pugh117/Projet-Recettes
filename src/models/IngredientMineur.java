@@ -16,6 +16,16 @@ public class IngredientMineur extends Ingredient{
         this.unit = unit;
     }
 
+    // get amout
+    public Double getAmount() {
+        return Double.parseDouble(this.amount);
+    }
+
+    // get unit
+    public String getUnit() {
+        return this.unit;
+    }
+
     // toString
     public String toString() {
         return this.name + " " + this.amount + " " + this.unit;

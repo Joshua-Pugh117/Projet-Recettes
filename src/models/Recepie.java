@@ -37,6 +37,8 @@ public class Recepie {
         this.ingredients.add(ingredient);
     }
 
+    
+
     //add preparation
     public void addPreparation(String preparation) {
         this.preparation.add(preparation);
@@ -60,6 +62,34 @@ public class Recepie {
     // get ingredients
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    // get steps
+    public ArrayList<String> getSteps() {
+        return preparation;
+    }
+
+    public ArrayList<Ingredient> getAllIngredients() {
+        ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
+        for (Ingredient ingredient: this.ingredients) {
+            if (ingredient instanceof IngredientMajeur) {
+                allIngredients.addAll(((IngredientMajeur) ingredient).getAllIngredients());
+            }
+            else {
+                allIngredients.add(ingredient);
+            }
+        }
+        return allIngredients;
+    }
+
+    // get title
+    public String getTitle() {
+        return title;
+    }
+
+    // get calories
+    public double getCalories() {
+        return nutrition.getCalories();
     }
 
     // toString

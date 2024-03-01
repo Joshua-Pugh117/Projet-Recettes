@@ -19,6 +19,12 @@ public class Nutrition {
             this.alchohol = alchohol;
         }
     }
+
+    // get calories
+
+    public double getCalories() {
+        return Double.parseDouble(calories);
+    }
     
     // toString
     public String toString() {

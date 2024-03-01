@@ -33,12 +33,35 @@ public class IngredientMajeur extends Ingredient{
         return ingredients;
     }
 
+    public ArrayList<Ingredient> getAllIngredients() {
+        ArrayList<Ingredient> result = new ArrayList<Ingredient>();
+        for (Ingredient ingredient: this.ingredients) {
+            if (ingredient instanceof IngredientMajeur) {
+                result.addAll(((IngredientMajeur) ingredient).getAllIngredients());
+            }
+            else{
+
+                result.add(ingredient);
+            }
+
+        }
+        return result;
+    }
+
     public ArrayList<String> getPreparation() {
         return preparation;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Double getAmount() {
+        return 0.0;
+    }
+
+    public String getUnit() {
+        return "";
     }
 
     public String toString() {
