@@ -7,36 +7,45 @@ import Repositories.*;
 public class RecepiePrincipale{
     private static void createAndShowGUI() throws Exception {
         RecepieRepo recepieRepo = new RecepieRepo("src\\recipes.xml");
+        String title = recepieRepo.getRecepies().get(0).getTitle();
+
 
         JFrame frame = new JFrame("HelloWorldSwing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        // frame.setLayout(new GridLayout(4, 2));
 
-        // Create a text box in the middle
-        JTextField textField = new JTextField();
-        frame.add(textField, BorderLayout.CENTER);
+        Label label = new Label("Name");
+        JTextArea textArea = new JTextArea(title);
 
-        // Create two buttons at the bottom
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+        frame.add(label);
+        frame.add(textArea);
 
-        JButton button1 = new JButton("Button 1");
-        JButton button2 = new JButton("Button 2");
+        
 
-        buttonPanel.add(button1);
-        buttonPanel.add(button2);
 
-        frame.add(buttonPanel, BorderLayout.SOUTH);
+        // Add a submit button
+        // JButton submitButton = new JButton("Submit");
+        // frame.add(submitButton);
+        // submitButton.addActionListener(e -> nextRecipie());
 
+        // frame.pack();
         frame.setSize(400, 300);
         frame.setVisible(true);
+    }
+
+    private static void nextRecipie() {
+        System.out.println("Next Recipie");
     }
 
     public static void main(String[] args) {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable()  {
             public void run() {
-                createAndShowGUI();
+                try {
+                    createAndShowGUI();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
