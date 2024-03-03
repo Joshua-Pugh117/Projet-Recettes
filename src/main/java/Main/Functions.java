@@ -12,7 +12,7 @@ import java.util.Comparator;
 public class Functions {
     public static void main(String[] args) throws Exception {
 
-        RecepieRepo recepieRepo = new RecepieRepo("src/recipes.xml");
+        RecepieRepo recepieRepo = new RecepieRepo("src/main/java/Main/recipes.xml");
         
         // test listRecepieTitles
         // listRecepieTitles(recepieRepo);
