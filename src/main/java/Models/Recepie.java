@@ -38,7 +38,15 @@ public class Recepie {
     }
     // Get les étapes de préparation
     public ArrayList<String> getSteps() {
-        return preparation;
+        ArrayList<String> res = new ArrayList<>(preparation);
+        for (Ingredient ingredient: this.ingredients) {
+            if (ingredient instanceof IngredientMajeur) {
+                res.addAll(((IngredientMajeur) ingredient).getAllSteps());
+                res.addAll(((IngredientMajeur) ingredient).getSteps());
+            }
+        }
+        System.out.println(res.size());
+        return res;
     }
 
      // Get ingredients ( en prennant les ingredient mineur et les ingredient mineur des majeur )

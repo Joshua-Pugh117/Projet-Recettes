@@ -47,6 +47,23 @@ public class IngredientMajeur extends Ingredient{
         }
         return result; // Retourne la liste d'ingredients
     }
+    
+    public ArrayList<String> getSteps() {
+       return this.preparation;
+    }
+    
+    public ArrayList<String> getAllSteps() {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Ingredient ingredient: this.ingredients) {
+            if (ingredient instanceof IngredientMajeur) {
+                
+                result.addAll(((IngredientMajeur) ingredient).getAllSteps());
+                result.addAll(((IngredientMajeur) ingredient).getSteps());
+            }
+        }
+        
+        return result;
+    }
 
     // Get la préparation
     public ArrayList<String> getPreparation() {
