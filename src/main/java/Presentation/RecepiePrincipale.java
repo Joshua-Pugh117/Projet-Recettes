@@ -10,13 +10,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 /**
  *
- * @author Joshu
+ * @author Joshua Pugh & Anya
  */
 public class RecepiePrincipale extends javax.swing.JFrame {
     RecepieRepo recepieRepo = new RecepieRepo("src/main/java/Main/recipes.xml");
@@ -239,7 +236,6 @@ public class RecepiePrincipale extends javax.swing.JFrame {
             }
             case 11 -> TextArea.setText(Functions.getMostFrequentUnit(recepieRepo).toString());
             case 12 -> {
-//                TextArea.setText(Functions.numberIngredientsPerRecipe(recepieRepo).toString());
                 Map<String,String> res = Functions.numberIngredientsPerRecipe(recepieRepo);
                 TextArea.setText(res.toString());
                 int[] integerList = res.values().stream()
@@ -274,10 +270,9 @@ public class RecepiePrincipale extends javax.swing.JFrame {
                 System.setOut(originalOut);
             }
             case 17 -> {
-//                TextArea.setText(Functions.calculateStepDistribution(recepieRepo).toString());
                 Map<Integer, List<String>> res = Functions.calculateStepDistribution(recepieRepo);
                 int totalCount = res.values().stream()
-                                    .mapToInt(List::size) // Get the size of each array list
+                                    .mapToInt(List::size)
                                     .sum();
                 
                 int[] intRes = new int[totalCount];

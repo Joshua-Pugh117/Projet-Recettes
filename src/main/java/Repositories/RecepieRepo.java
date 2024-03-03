@@ -109,7 +109,6 @@ public class RecepieRepo {
 
             this.recepies.add(recepie); // Ajoute la recette au livre de recette
         }
-    
     }
     
     // ------------------------------------- Fonctions -------------------------------------

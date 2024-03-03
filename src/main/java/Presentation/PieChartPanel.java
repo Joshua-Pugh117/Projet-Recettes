@@ -72,13 +72,12 @@ public class PieChartPanel extends javax.swing.JPanel {
                 g2d.setColor(colors[i % 6]);
                 g2d.fillRect(boxX, boxY, 10, 10); // Customize the box size if desired
 
-
                 startAngle += arcAngle;
             }
         }else{
             g2d.setColor(Color.black);
             g2d.setFont(new Font("Arial", Font.PLAIN, 12));
-            g2d.drawString("Graph pas disponible, graph disponible pour;", 50, 100);
+            g2d.drawString("Graph non disponible, graph disponible pour;", 50, 100);
             g2d.drawString("-numberIngredientsPerRecipe", 100, 115);
             g2d.drawString("-calculateEggsPerRecepie", 100, 130);
             g2d.drawString("-calculateStepDistribution", 100, 145);
