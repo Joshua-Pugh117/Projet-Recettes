@@ -6,77 +6,42 @@ public class Recepie {
     String id;
     String title;
     String date;
-    ArrayList<Ingredient> ingredients;
-    ArrayList<String> preparation;
-    String comment;
+    ArrayList<Ingredient> ingredients; // Liste d'ingrédients
+    ArrayList<String> preparation; // Liste d'étapes
+    String comment; 
     Nutrition nutrition;
     Related related;
 
+    // Constructeur
     public Recepie() {
         this.ingredients = new ArrayList<Ingredient>();
         this.preparation = new ArrayList<String>();
     }
 
-    // set id
-    public void setId(String id) {
-        this.id = id;
+    // ---------------------- Getter ----------------------
+
+    // Get le title
+    public String getTitle() {
+        return title;
     }
-
-    // set title
-    public void setTitle(String title) {
-        this.title = title;
+    // Get les calories
+    public double getCalories() {
+        return nutrition.getCalories();
     }
-
-    // set date
-    public void setDate(String date) {
-        this.date = date;
+    // Get fat
+    public String getFat() {
+        return nutrition.getFat();
     }
-
-    //add ingredient
-    public void addIngredient(Ingredient ingredient) {
-        this.ingredients.add(ingredient);
-    }
-
-    
-
-    //add preparation
-    public void addPreparation(String preparation) {
-        this.preparation.add(preparation);
-    }
-
-    //set comment
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    //set nutrition
-    public void setNutrition(Nutrition nutrition) {
-        this.nutrition = nutrition;
-    }
-
-    //set related
-    public void setRelated(Related related) {
-        this.related = related;
-    }
-
-    // get ingredients
+    // Get les ingredients ( en prennant les ingredient mineur et les majeur )
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
-
-    // get steps
+    // Get les étapes de préparation
     public ArrayList<String> getSteps() {
         return preparation;
     }
 
-    public String getId() {
-        return id;
-    }
-    
-    public String getDate() {
-        return date;
-    }
-
+     // Get ingredients ( en prennant les ingredient mineur et les ingredient mineur des majeur )
     public ArrayList<Ingredient> getAllIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
         for (Ingredient ingredient: this.ingredients) {
@@ -90,35 +55,46 @@ public class Recepie {
         return allIngredients;
     }
 
-    // get title
-    public String getTitle() {
-        return title;
+    // ---------------------- Setter ----------------------
+
+    // Set l'id
+    public void setId(String id) {
+        this.id = id;
+    }
+    // Set le title
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    // Set la date
+    public void setDate(String date) {
+        this.date = date;
+    }
+    // Set un commentaire
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    // Set la nutrition
+    public void setNutrition(Nutrition nutrition) {
+        this.nutrition = nutrition;
+    }
+    // Set le related
+    public void setRelated(Related related) {
+        this.related = related;
     }
 
-    // get calories
-    public double getCalories() {
-        return nutrition.getCalories();
+    // ---------------------- Methodes d'ajout ----------------------
+
+    // Ajoute un ingredient
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
     }
 
-    public String getComment() {
-        return comment;
+    // Ajoute une étape de preparation
+    public void addPreparation(String preparation) {
+        this.preparation.add(preparation);
     }
 
-    public Nutrition getNutrition() {
-        return nutrition;
-    }
-    
-    public String getFat() {
-        return nutrition.getFat();
-    }
-
-    public Related getRelated() {
-        return related;
-    }
-    
-    
-
-    // toString
+    // Méthode to String
     public String toString() {
         return "Recepie{" +
                 "\n id=" + id +
