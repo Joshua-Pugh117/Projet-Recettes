@@ -5,18 +5,40 @@
 package Presentation;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
+import java.util.ArrayList;
 /**
  *
  * @author Joshu
  */
 public class PieChartPanel extends javax.swing.JPanel {
-    private final int[] data= {30, 20, 15, 35};
+    private int[] data= {30, 10, 15, 25, 10, 10};
+    private String[] labels = {"Red", "Blue", "Yellow", "Green", "Pink", "Cyan"};
+    Color[] colors;
     /**
      * Creates new form PieChartPanel
      */
     public PieChartPanel() {
         initComponents();
+        colors = new Color[6];
+        colors[0] = Color.red;
+        colors[1] = Color.blue;
+        colors[2] = Color.yellow;
+        colors[3] = Color.green;
+        colors[4] = Color.pink;
+        colors[5] = Color.cyan;
     }
+
+    public void setData(int[] data) {
+        this.data = data;
+        
+    }
+    
+    public void setLabels(String[] labels) {
+        this.labels = labels;
+        
+    }
+    
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -27,13 +49,39 @@ public class PieChartPanel extends javax.swing.JPanel {
         for (int value : data) {
             total += value;
         }
+        
+        if (total != 0) {
+            int startAngle = 0;
+            for (int i = 0; i < data.length; i++) {
+                int arcAngle = (int) (360.0 * data[i] / total);
+                g2d.setColor(this.colors[i%6]);
+                g2d.fillArc(50, 50, 200, 200, startAngle, arcAngle);
 
-        int startAngle = 0;
-        for (int value : data) {
-            int arcAngle = (int) (360.0 * value / total);
-            g2d.setColor(Color.getHSBColor((float) Math.random(), 0.7f, 0.9f));
-            g2d.fillArc(50, 50, 200, 200, startAngle, arcAngle);
-            startAngle += arcAngle;
+                 // Calculate the position for the label
+                int labelX = 275;
+                int labelY = 150+i*15;
+
+                // Draw the label
+                g2d.setColor(Color.black);
+                g2d.setFont(new Font("Arial", Font.PLAIN, 12));
+                g2d.drawString(labels[i], labelX, labelY);
+
+                // Draw the colored box next to the label
+                int boxX = labelX - 20; // Adjust the position as needed
+                int boxY = labelY - 10; // Adjust the position as needed
+                g2d.setColor(colors[i % 6]);
+                g2d.fillRect(boxX, boxY, 10, 10); // Customize the box size if desired
+
+
+                startAngle += arcAngle;
+            }
+        }else{
+            g2d.setColor(Color.black);
+            g2d.setFont(new Font("Arial", Font.PLAIN, 12));
+            g2d.drawString("Graph pas disponible, graph disponible pour;", 50, 100);
+            g2d.drawString("-numberIngredientsPerRecipe", 100, 115);
+            g2d.drawString("-calculateEggsPerRecepie", 100, 130);
+            g2d.drawString("-calculateStepDistribution", 100, 145);
         }
     }
 

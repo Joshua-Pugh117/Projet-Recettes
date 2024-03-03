@@ -1,11 +1,13 @@
 Models\Ingredient.class
-Models\Recepie.class
-Main\Functions.class
-Models\IngredientMineur.class
+Presentation\PieChartPanel.class
 Models\Related.class
-Repositories\RecepieRepo.class
 Models\IngredientMajeur.class
 Presentation\RecepiePrincipale$2.class
 Presentation\RecepiePrincipale.class
+Presentation\RecepiePrincipale$3.class
+Models\Recepie.class
+Main\Functions.class
+Models\IngredientMineur.class
+Repositories\RecepieRepo.class
 Models\Nutrition.class
 Presentation\RecepiePrincipale$1.class

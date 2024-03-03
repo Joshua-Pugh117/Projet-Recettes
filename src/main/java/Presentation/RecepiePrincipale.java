@@ -3,28 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Presentation;
-import Repositories.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
+
 import Main.Functions;
-import java.awt.BorderLayout;
-import java.io.*;
+import Repositories.RecepieRepo;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author Joshu
  */
 public class RecepiePrincipale extends javax.swing.JFrame {
-    RecepieRepo recepieRepo = new RecepieRepo("src\\main\\java\\Main\\recipes.xml");
+    RecepieRepo recepieRepo = new RecepieRepo("src/main/java/Main/recipes.xml");
     PrintStream originalOut = System.out;
     ByteArrayOutputStream os;
     PrintStream ps;
     String output;
     /**
      * Creates new form RecepiePrincipale
-     * @throws java.lang.Exception
      */
-    public RecepiePrincipale() throws Exception{
+    public RecepiePrincipale() throws Exception {
         initComponents();
         
         ActionComboBox.addItem("listRecepieTitles");
@@ -46,11 +49,6 @@ public class RecepiePrincipale extends javax.swing.JFrame {
         ActionComboBox.addItem("printRecipesByIngredient");
         ActionComboBox.addItem("calculateStepDistribution");
         ActionComboBox.addItem("getEasiestRecipe");
-        
-
-//        System.out.println(ActionComboBox.getItemCount());
-        
-        
     }
 
     /**
@@ -62,18 +60,32 @@ public class RecepiePrincipale extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
+        jPanel = new javax.swing.JPanel();
         ActionComboBox = new javax.swing.JComboBox<>();
+        jToggleButton2 = new javax.swing.JToggleButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextArea = new javax.swing.JTextArea();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        jPanel2 = new javax.swing.JPanel();
+        pieChartPanel1 = new Presentation.PieChartPanel();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ActionComboBox.setMaximumRowCount(20);
+        ActionComboBox.setMaximumRowCount(19);
         ActionComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ActionComboBoxActionPerformed(evt);
+            }
+        });
+
+        jToggleButton2.setText("Toggle Text/Graph");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
             }
         });
 
@@ -84,46 +96,89 @@ public class RecepiePrincipale extends javax.swing.JFrame {
         TextArea.setFocusable(false);
         jScrollPane1.setViewportView(TextArea);
 
-        jToggleButton1.setText("ToggleChart");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pieChartPanel1Layout = new javax.swing.GroupLayout(pieChartPanel1);
+        pieChartPanel1.setLayout(pieChartPanel1Layout);
+        pieChartPanel1Layout.setHorizontalGroup(
+            pieChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
+        );
+        pieChartPanel1Layout.setVerticalGroup(
+            pieChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 292, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pieChartPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pieChartPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ActionComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLayeredPane1)
+            .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addComponent(ActionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1))
+                .addComponent(jLayeredPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton2))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ActionComboBox, 0, 270, Short.MAX_VALUE))
+                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ActionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -131,7 +186,8 @@ public class RecepiePrincipale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ActionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionComboBoxActionPerformed
-        
+        pieChartPanel1.setData(new int[0]);
+        pieChartPanel1.setLabels(new String[0]);
         switch (ActionComboBox.getSelectedIndex()) {
             case 0 -> {
                 os = new ByteArrayOutputStream();
@@ -145,7 +201,17 @@ public class RecepiePrincipale extends javax.swing.JFrame {
             }
             case 1 -> TextArea.setText(String.valueOf(Functions.calculateTotalEggs(recepieRepo)));
             case 2 -> TextArea.setText(Functions.getRecepiesWithOliveOil(recepieRepo).toString());
-            case 3 -> TextArea.setText(Functions.calculateEggsPerRecepie(recepieRepo).toString());
+            case 3 ->{
+                Map<String,Double> res = Functions.calculateEggsPerRecepie(recepieRepo);
+                TextArea.setText(res.toString());
+                int[] integerList = res.values().stream()
+                                        .mapToInt(Double::intValue)
+                                        .toArray();
+                String[] keysArray = res.keySet().toArray(new String[0]);
+                
+                pieChartPanel1.setData(integerList);
+                pieChartPanel1.setLabels(keysArray);
+            }
             case 4 -> TextArea.setText(Functions.getLowCalorieRecepies(recepieRepo).toString());
             case 5 -> TextArea.setText(Functions.getSugarInZuppaInglese(recepieRepo).toString());
             case 6 -> {
@@ -172,7 +238,19 @@ public class RecepiePrincipale extends javax.swing.JFrame {
                 System.setOut(originalOut);
             }
             case 11 -> TextArea.setText(Functions.getMostFrequentUnit(recepieRepo).toString());
-            case 12 -> TextArea.setText(Functions.numberIngredientsPerRecipe(recepieRepo).toString());
+            case 12 -> {
+//                TextArea.setText(Functions.numberIngredientsPerRecipe(recepieRepo).toString());
+                Map<String,String> res = Functions.numberIngredientsPerRecipe(recepieRepo);
+                TextArea.setText(res.toString());
+                int[] integerList = res.values().stream()
+                                        .mapToInt(Integer::parseInt)
+                                        .toArray();
+                
+                String[] keysArray = res.keySet().toArray(new String[0]);
+                
+                pieChartPanel1.setData(integerList);
+                pieChartPanel1.setLabels(keysArray);
+            }
             case 13 -> TextArea.setText(Functions.getRecepieWithMostFat(recepieRepo).toString());
             case 14 -> TextArea.setText(Functions.calculateMostUsedIngredient(recepieRepo));
             case 15 -> {
@@ -195,15 +273,38 @@ public class RecepiePrincipale extends javax.swing.JFrame {
                 TextArea.setText(output);
                 System.setOut(originalOut);
             }
-            case 17 -> TextArea.setText(Functions.calculateStepDistribution(recepieRepo).toString());
+            case 17 -> {
+//                TextArea.setText(Functions.calculateStepDistribution(recepieRepo).toString());
+                Map<Integer, List<String>> res = Functions.calculateStepDistribution(recepieRepo);
+                int totalCount = res.values().stream()
+                                    .mapToInt(List::size) // Get the size of each array list
+                                    .sum();
+                
+                int[] intRes = new int[totalCount];
+                String[] strRes = new String[totalCount];
+                int cmt = 0;
+                for (Integer key : res.keySet()) {
+                    for (String s : res.get(key)) {
+                        intRes[cmt] = key;
+                        strRes[cmt] = s;
+                        cmt ++;
+                    }
+                }
+                
+                TextArea.setText(res.toString());
+                
+                pieChartPanel1.setData(intRes);
+                pieChartPanel1.setLabels(strRes);
+            }
             case 18 -> TextArea.setText(Functions.getEasiestRecipe(recepieRepo));
             default -> throw new AssertionError();
         }
+        getContentPane().repaint();
     }//GEN-LAST:event_ActionComboBoxActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        TextArea.setVisible(!jToggleButton1.getModel().isSelected());
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        jPanel1.setVisible(!jToggleButton2.getModel().isSelected());
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,12 +336,11 @@ public class RecepiePrincipale extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try{
+                 try{
                     new RecepiePrincipale().setVisible(true);
                 }catch (Exception e){
                     System.out.println(e);
                 }
-                    
             }
         });
     }
@@ -248,8 +348,13 @@ public class RecepiePrincipale extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ActionComboBox;
     private javax.swing.JTextArea TextArea;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private Presentation.PieChartPanel pieChartPanel1;
     // End of variables declaration//GEN-END:variables
 }
