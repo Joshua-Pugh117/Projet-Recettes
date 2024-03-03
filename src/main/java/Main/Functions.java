@@ -1,22 +1,19 @@
 package Main;
 
 import Models.*;
+import Repositories.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.function.Function;
-import Repositories.*;
 import java.util.Comparator;
 
 public class Functions {
     public static void main(String[] args) throws Exception {
 
-        RecepieRepo recepieRepo = new RecepieRepo("src/main/java/Main/recipes.xml");
-        // IngredientMajeur x = (IngredientMajeur)
-        // recepieRepo.getRecepies().get(4).getIngredients().get(1);
-        // System.out.println(x.getIngredients().get(0));
-
+        RecepieRepo recepieRepo = new RecepieRepo("src/recipes.xml");
+        
         // test listRecepieTitles
         // listRecepieTitles(recepieRepo);
 
@@ -42,81 +39,128 @@ public class Functions {
         // System.out.println(getComplexRecepies(recepieRepo));
 
         // test getRecepiesWithoutButter
-        System.out.println(getRecepiesWithoutButter(recepieRepo));
+        //System.out.println(getRecepiesWithoutButter(recepieRepo));
 
+        // test getRecepiesCommonWithZuppaInglese
+        // System.out.println(getRecepiesCommonWithZuppaInglese(recepieRepo));
+        
+        // test printMostCaloricRecepie
+        // printMostCaloricRecepie(recepieRepo);
+
+        // test getMostFrequentUnit
+        // System.out.println("L'unité la plus fréquente " + getMostFrequentUnit(recepieRepo));
+
+        // test numberIngredientsPerRecipe
+       /* numberIngredientsPerRecipe(recepieRepo).forEach((recipe, Ingredientnumber) -> 
+            System.out.println("La recette : " + recipe + " a " + Ingredientnumber + " ingredients"
+        ));
+        */
+
+        // test getRecepieWithMostFat
+        // System.out.println(getRecepieWithMostFat(recepieRepo).getTitle());
+
+        // test calculateMostUsedIngredient
+        // System.out.println(calculateMostUsedIngredient(recepieRepo));
+
+        // test printRecipesSortedByIngredientCount
+        //printRecipesSortedByIngredientCount(recepieRepo);
+
+        // test printRecipesByIngredient
+        //printRecipesByIngredient(recepieRepo);
+
+        // test calculateStepDistribution
+        /*calculateStepDistribution(recepieRepo).forEach((number, listRecipes) -> 
+            System.out.println("Nombre d'étapes " + number + " pour les recettes : " + listRecipes
+        ));
+        */
+        // test getEasiestRecipe
+        System.out.println(getEasiestRecipe(recepieRepo));
     }
 
+// -------------------------------------------------------------------------------------------
+
+    // Méthode qui permet de lister les titres des recettes
     public static void listRecepieTitles(RecepieRepo recepieRepo) {
-        recepieRepo.getRecepies().stream()
-                .map(Recepie::getTitle)
-                .forEach(System.out::println);
+        recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .map(Recepie::getTitle) // Fait une map des titres des recettes
+                .forEach(System.out::println); // Affiche chacune d'entre elle
     }
 
+    // Méthode qui permet de calculer le nombre total d’œufs utilisés
     public static double calculateTotalEggs(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                .flatMap(recepie -> recepie.getAllIngredients().stream())
-                .filter(ingredient -> ingredient.getName().contains("egg"))
-                .mapToDouble(Ingredient::getAmount)
-                .sum();
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .flatMap(recepie -> recepie.getAllIngredients().stream()) // Récupère tout les ingrédients des recettes
+                .filter(ingredient -> ingredient.getName().contains("egg")) // Garde les ingrédients qui ont des oeufs
+                .mapToDouble(Ingredient::getAmount) // Récupère le nombre d'oeufs
+                .sum(); // Fait la somme des oeufs
     }
 
+    // Méthode qui permet de retourner les recettes utilisant l’huile d’olive
     public static List<String> getRecepiesWithOliveOil(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                .filter(recepie -> recepie.getAllIngredients().stream()
-                        .anyMatch(ingredient -> ingredient.getName().contains("olive oil")))
-                .map(Recepie::getTitle)
-                .collect(Collectors.toList());
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getAllIngredients().stream() // Récupère tous les ingrédients
+                        // Si parmis les ingrédient il y en a un qui est de l'huite
+                        .anyMatch(ingredient -> ingredient.getName().contains("olive oil"))) 
+                .map(Recepie::getTitle) // Récupère les titres des recettes
+                .collect(Collectors.toList()); // Les met dans une liste
     }
 
+    // Méthode qui permet de calculer le nombre d’œufs par recette
     public static Map<String, Double> calculateEggsPerRecepie(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                .collect(Collectors.toMap(
-                        Recepie::getTitle,
-                        recepie -> recepie.getAllIngredients().stream()
-                                .filter(ingredient -> ingredient.getName().contains("egg"))
-                                .mapToDouble(Ingredient::getAmount)
-                                .sum()));
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .collect(Collectors.toMap( // Les mets dans un map qui associe
+                        Recepie::getTitle, // Les titres des recettes
+                        recepie -> recepie.getAllIngredients().stream() // Récupère les ingrédient
+                                .filter(ingredient -> ingredient.getName().contains("egg")) // Vérifie si ils ont des oeufs
+                                .mapToDouble(Ingredient::getAmount) // Récupère le nombre
+                                .sum())); // Fait la somme
     }
 
+    // Méthode qui permet de retourner les recettes fournissant moins de 500 calories
     public static List<Recepie> getLowCalorieRecepies(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                .filter(recepie -> recepie.getCalories() < 500)
-                .collect(Collectors.toList());
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getCalories() < 500) // Vérifie si les ingrédients ont moins de 500 calories
+                .collect(Collectors.toList()); // Et met dans une list ceux qui vérifie la condition
     }
 
+    // Méthode qui retourne la quantité de sucre utilisée par la recette Zuppa Inglese
     public static Object getSugarInZuppaInglese(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                .filter(recepie -> recepie.getTitle().equals("Zuppa Inglese"))
-                .flatMap(recepie -> recepie.getAllIngredients().stream())
-                .filter(ingredient -> ingredient.getName().contains("sugar"))
-                .collect(Collectors.toMap(
-                        Ingredient::getUnit,
-                        Ingredient::getAmount));
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getTitle().equals("Zuppa Inglese")) // Récupère la recette dont le nom est "Zuppa Inglese"
+                .flatMap(recepie -> recepie.getAllIngredients().stream()) // Récupère tout les ingrédients
+                .filter(ingredient -> ingredient.getName().contains("sugar")) // Vérifie si la recette contient du sucre
+                .collect(Collectors.toMap( // Met dans un map
+                        Ingredient::getUnit, // Récupère l'unité
+                        Ingredient::getAmount)); // Et la quantité
     }
 
+    // méthode qui affiche les 2 premières étapes de la recette Zuppa Inglese
     public static void printFirstTwoStepsOfZuppaInglese(RecepieRepo recepieRepo) {
-        recepieRepo.getRecepies().stream()
-                .filter(recepie -> recepie.getTitle().equals("Zuppa Inglese"))
-                .findFirst()
-                .map(recepie -> recepie.getSteps())
-                .stream().forEach(System.out::println);
+        recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getTitle().equals("Zuppa Inglese")) // Récupère la recette dont le nom est "Zuppa Inglese"
+                .findFirst() 
+                .map(recepie -> recepie.getSteps()) // Récupère les étapes de recettes
+                .ifPresent(steps -> steps.stream().limit(2) // Si il y a bien des étapes on les limites à 2
+                .forEach(System.out::println)); // on les affihce
     }
 
+    // Méthode qui retourne les recettes qui nécessitent plus de 5 étapes
     public static List<Recepie> getComplexRecepies(RecepieRepo recepieRepo) { // a revoir !
-        return recepieRepo.getRecepies().stream()
-                       .filter(recepie -> recepie.getSteps().size() > 5)
-                       .collect(Collectors.toList());
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getSteps().size() > 5) // Vérifie si la recette nécéssite plus de 5 étapes
+                .collect(Collectors.toList()); // Met les recettes dans une liste
     }
 
+    // Méthode qui retourne les recettes qui ne contiennent pas de beure
     public static List<String> getRecepiesWithoutButter(RecepieRepo recepieRepo) {
-        return recepieRepo.getRecepies().stream()
-                       .filter(recepie -> recepie.getAllIngredients().stream()
-                                                 .noneMatch(ingredient -> ingredient.getName().contains("butter")))
-                       .map(Recepie::getTitle)                          
-                       .collect(Collectors.toList());
+        return recepieRepo.getRecepies().stream() // Récupère les recettes 
+                .filter(recepie -> recepie.getAllIngredients().stream() // Récupère tout les ingrédients
+                        .noneMatch(ingredient -> ingredient.getName().contains("butter"))) // Vérifie si il n'y a pas de beurre
+                .map(Recepie::getTitle) // Récupère le nom des recettes 
+                .collect(Collectors.toList()); // Les mets dans une liste
     }
-    
-        // Méthode qui retourne les recettes ayant des ingrédients en communs avec la recette Zuppa Inglese
+
+    // Méthode qui retourne les recettes ayant des ingrédients en communs avec la recette Zuppa Inglese
     public static List<String> getRecepiesCommonWithZuppaInglese(RecepieRepo recepieRepo) {
         Recepie ZuppaInglese = recepieRepo.getRecepies().stream() // Récupère les recettes
                 .filter(recepie -> recepie.getTitle().equals("Zuppa Inglese")) // Récupère Zuppa Inglese
@@ -228,7 +272,6 @@ public class Functions {
                 .flatMap(entry -> entry.getValue().stream().findFirst()) // Prends la première la valeur
                 .orElse(null); // Extraction du Optional<String>
     }
-
 }
 
 
